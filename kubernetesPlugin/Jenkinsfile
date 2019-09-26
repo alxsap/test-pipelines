@@ -1,0 +1,34 @@
+node ('master') {
+    def uniqueId = UUID.randomUUID().toString()
+    def imageName = 'ubuntu'
+
+    podTemplate(
+        name: 'testPodTemplate',
+        label: uniqueId, 
+        containers: [
+            containerTemplate(
+                name: 'jnlp', 
+                image: 'alxsap/docker-jnlp-slave:ad75629-alpine',
+                image: "${JNLP_IMAGE}",
+                args: '${computer.jnlpmac} ${computer.name}'
+            ),
+
+            containerTemplate (
+                name: 'container-exec',
+                image: imageName,
+                command: '/usr/bin/tail -f /dev/null',
+            )
+        ]
+    )
+    {
+        node (uniqueId) {
+
+            echo "Execute container content in Kubernetes pod"
+            container('container-exec'){
+                sh '''
+                    env
+                '''
+            }
+        }
+    }
+}
