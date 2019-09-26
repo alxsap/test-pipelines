@@ -9,7 +9,6 @@ node ('master') {
             containerTemplate(
                 name: 'jnlp', 
                 image: 'alxsap/docker-jnlp-slave:ad75629-alpine',
-                image: "${JNLP_IMAGE}",
                 args: '${computer.jnlpmac} ${computer.name}'
             ),
 
