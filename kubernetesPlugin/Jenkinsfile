@@ -8,7 +8,7 @@ node ('master') {
         containers: [
             containerTemplate(
                 name: 'jnlp', 
-                image: 'alxsap/docker-jnlp-slave:ad75629-alpine',
+                image: 'jenkins/jnlp-slave:3.35-5-alpine',
                 args: '${computer.jnlpmac} ${computer.name}'
             ),
 
